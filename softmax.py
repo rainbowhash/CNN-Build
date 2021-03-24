@@ -21,7 +21,9 @@ class softmax:
         # dot operation of a matrix is smilar to what happens after flattening 
         # flattening involves converting rows as colum and concatinati it with
         # new row 
-        sum=np.dot(image,self.weights)+self.bias
+        # equation of softmax is e^of class/sum(e^(all class))
+        sum=np.dot(image,self.weights)+self.bias#
+        print(sum)
         exp=np.exp(sum)
         denominator=np.sum(exp,axis=0)
         return exp/denominator
