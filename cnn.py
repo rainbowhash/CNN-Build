@@ -2,7 +2,7 @@
 """
 Created on Wed Mar 24 13:11:08 2021
 
-@author: k20104661
+@author: Tharun 
 """
 
 from conv import conv3x3
