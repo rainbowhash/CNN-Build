@@ -2,7 +2,7 @@
 
 I have to be honest I have learnt a lot by learning to code CNN from scratch without any already implemented library. 
 
-To start off I am going to guess you already have some prerequisite knowledge of the Neural network. I still remember around 2012 it became such big news when an AI system was able to distinguish and detect cats in an image, This was when there was a huge leap in AI after the AI winter. One thing to note is that these algorithms existed since the 90’s but the main reason that they have such a breakthrough now is because of available computation power, Ie the age of GPU’s. GPU was initially for running games but they got so powerful that they could do more than run games. 
+_Note:I am going to guess you already have some prerequisite knowledge of the Neural network. I still remember around 2012 it became such big news_ when an AI system was able to distinguish and detect cats in an image, This was when there was a huge leap in AI after the AI winter. One thing to note is that these algorithms existed since the 90’s but the main reason that they have such a breakthrough now is because of available computation power, Ie the age of GPU’s. GPU was initially for running games but they got so powerful that they could do more than run games. 
 
 The advancement in computing is still continuing till today and will continue in the future, what possibilities await in the near future is so exciting.
 
