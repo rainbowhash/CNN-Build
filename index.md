@@ -7,7 +7,7 @@ Testing
 ### Markdown
 Testing
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for testing
 
 ```markdown
 Syntax highlighted code block
