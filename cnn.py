@@ -53,7 +53,7 @@ class cnn:
     def genisis(self):
         loss = 0
         num_correct = 0
-        for i, (im, label) in enumerate(zip(self.x_train, self.y_train)):
+        for i, (im, label) in enumerate(zip(self.x_train[:1000], self.y_train[:1000])):
             if i % 100 == 99:
                 print('[Step %d] Past 100 steps: Average Loss %.3f | Accuracy: %d%%' %(i + 1, loss / 100, num_correct))
                 loss = 0
