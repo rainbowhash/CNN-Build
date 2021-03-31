@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## Simple way to CNN
 
 I have to be honest I have learnt a lot by learning to code CNN from scratch without any already implemented library. 
 
