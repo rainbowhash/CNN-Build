@@ -25,9 +25,9 @@ class conv3x3:
         # output = Regions
         h,w=image.shape
         
-        for i in range(h-self.filter_size-1, self.stride):
-            for j in range(w-self.filter_size-1, self.stride):
-                image_region=image[i:i+self.filter_size,j:j+self.filter_size]
+        for i in range(h-self.filter_size-1):
+            for j in range(w-self.filter_size-1):
+                image_region=image[i:(i+self.filter_size),j:(j+self.filter_size)]
                 yield image_region , i, j
     
     def forward_pass(self,image):
@@ -37,8 +37,8 @@ class conv3x3:
         # Output = Sequence of convoled output images
         
         h,w=image.shape
-    
-        output=np.zeros(((h-self.filter_size)+1,(w-self.filter_size)+1,self.num_filters))
+        self.last_input=image
+        output=np.zeros(((h-(self.filter_size-1)),(w-(self.filter_size-1)),self.num_filters))
         # formula: (w-k+2p/s)+1
         # w=image width 
         # k= filter size/kernal size
@@ -48,4 +48,17 @@ class conv3x3:
             output[i,j]=np.sum(region*self.filters,axis=(1,2))
         
         return output
-            
+         
+    def backprop(self,dL_dout, learn_rate):
+        # method implementing back prop of convolution layer
+        
+        dL_dfilters=np.zeros(self.filters.shape)
+
+        for region, i, j in self.generate_regions(self.last_input):
+            for f in range(self.num_filters):
+                dL_dfilters[f] += dL_dout[i, j, f] * region
+                
+        # Update filter
+        self.filters -= learn_rate * dL_dfilters
+        
+        return None 

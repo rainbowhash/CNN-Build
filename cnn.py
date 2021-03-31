@@ -34,7 +34,10 @@ class cnn:
         self.prep_data()
         
     def forwardpro(self,image,label):
-        layer1=self.conv.forward_pass(image)
+        layer1=self.conv.forward_pass((image/255)-0.5)
+        # a standard form to make computation easy. Zero centered (scaling technique)
+        # makes computation easy.
+        # without this it takes foreever to connverge
         layer2=self.mp.forward(layer1)
         layer3=self.sb.forward(layer2)
         loss=-np.log(layer3[label])
@@ -47,20 +50,52 @@ class cnn:
         z,lo,ac=self.forwardpro(image,label)
         gradiant[label]=-1/z[label]
         gradiant=self.sb.backprop(gradiant,lr)
+        gradiant=self.mp.backprop(gradiant)
+        gradiant=self.conv.backprop(gradiant,lr)
         #print(lo,ac)
         return lo,ac
-
-    def genisis(self):
+    
+    def test(self,image,label):
+        print('\n--- Testing the CNN ---')
         loss = 0
         num_correct = 0
-        for i, (im, label) in enumerate(zip(self.x_train[:1000], self.y_train[:1000])):
-            if i % 100 == 99:
-                print('[Step %d] Past 100 steps: Average Loss %.3f | Accuracy: %d%%' %(i + 1, loss / 100, num_correct))
-                loss = 0
-                num_correct = 0
-            l, acc = self.train(im, label)
+        for im, label in zip(image, label):
+            _, l, acc = self.forwardpro(im, label)
             loss += l
             num_correct += acc
+        num_tests = len(image)
+        print('Test Loss:', loss / num_tests)
+        print('Test Accuracy:', num_correct / num_tests)
+        
+
+    def genisis(self):
+        for epoch in range(3):
+            print('--- Epoch %d ---' % (epoch + 1))
+            train_images=self.x_train[:1000]
+            train_labels=self.y_train[:1000]
+            
+            # Shuffle the training data
+            permutation = np.random.permutation(len(train_images))
+            train_images = train_images[permutation]
+            train_labels = train_labels[permutation]
+            loss = 0
+            num_correct = 0
+            for i, (im, label) in enumerate(zip(train_images,train_labels)):
+                if i % 100 == 99:
+                    print('[Step %d] Past 100 steps: Average Loss %.3f | Accuracy: %d%%' %(i + 1, loss / 100, num_correct))
+                    loss = 0
+                    num_correct = 0
+                l, acc = self.train(im, label)
+                loss += l
+                num_correct += acc
+                
+        test_images=self.x_train[1000:2000]
+        test_labels=self.y_train[1000:2000]
+        self.test(test_images, test_labels)
+        
+        
+            
+        
         
     def prep_data(self):
         (self.x_train, self.y_train), (self.x_test, self.y_test) = tf.keras.datasets.mnist.load_data()
